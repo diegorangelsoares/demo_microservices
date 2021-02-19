@@ -3,18 +3,19 @@ package com.micro.demo.endpoint.controller;
 
 import com.micro.demo.endpoint.service.DemoService;
 import com.micro.demo.model.Demo;
+import com.micro.demo.repository.DemoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 import java.awt.print.Pageable;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("v1/admin/demo")
@@ -22,11 +23,19 @@ import java.awt.print.Pageable;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DemoController {
 
-    private final DemoService demoService;
+    @Autowired
+    private DemoService demoService;
 
-    @GetMapping (produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Iterable<Demo>> list (Pageable pageable){
-        return new ResponseEntity<>(demoService.list(pageable), HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, value="/Livros",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<Demo>> list (){
+        Collection< Demo> PropostasBuscados= demoService.list();
+        return new ResponseEntity<>(PropostasBuscados, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value="/Livro/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Demo> getDemo (@PathVariable Integer  id){
+        Demo demo = demoService.buscaPorId(id);
+        return new ResponseEntity<>(demo, HttpStatus.OK);
     }
 
 

@@ -22,8 +22,9 @@ public class Demo implements AbstractEntity{
     @EqualsAndHashCode.Include
     private long id;
 
-    @NotNull//(message = "The fild 'title' is mandatory")
+    @NotNull
     @Column (nullable = false)
     private String title;
+
 
 }

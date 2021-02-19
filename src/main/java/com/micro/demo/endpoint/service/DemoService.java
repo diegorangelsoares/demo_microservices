@@ -8,17 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
+import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DemoService {
 
-    private final DemoRepository demoRepository;
+    @Autowired
+    private DemoRepository demoRepository;
 
-    public Iterable<Demo> list (Pageable pageable){
+    public Collection<Demo> list (){
+        Collection< Demo> livros= demoRepository.findAll();
         log.info("Listando todos os Demos");
-        return demoRepository.findAll((org.springframework.data.domain.Pageable) pageable);
+        return livros;
+    }
+
+    public Demo buscaPorId (long id){
+        Optional<Demo> livro= demoRepository.findById(id);
+        log.info("Listando Demo por id");
+        return livro.get();
     }
 
 
