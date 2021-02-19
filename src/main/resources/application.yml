@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: demo_microservices
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+          dialect: org.hibernate.dialect.MySQL8Dialect
+
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3309/microservices?allowPublicKeyRetrieval=true&sslMode=DISABLED
+#    url: jdbc:mysql://localhost:3306/microservices
+    username: root
+    password: 123456
+
